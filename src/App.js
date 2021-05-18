@@ -1,39 +1,17 @@
-import { connect } from "react-redux";
-import "./App.css";
-import { Button } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import Details from "components/Details";
+import MainPage from "components/MainPage";
 
-const mapStateToProps = (state) => state;
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-const mapDispatchToProps = (dispatch) => ({
-  increaseCounter: () => {
-    dispatch({ type: "INCREMENT" });
-  },
-  decreaseCounter: () => {
-    dispatch({ type: "DECREMENT" });
-  },
-});
-
-function App(props) {
+function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Button onClick={props.increaseCounter}>INCREASE</Button>
-        <p>{props.count}</p>
-        <Button variant="secondary" onClick={props.decreaseCounter}>
-          DECREASE
-        </Button>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Route path="/" exact component={MainPage} />
+        <Route path="/details/:id" exact component={Details} />
+      </Router>
+    </>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
