@@ -1,5 +1,5 @@
-import Details from "components/Details";
-import MainPage from "components/MainPage";
+import Details from "./components/Details";
+import MainPage from "./components/MainPage";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
