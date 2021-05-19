@@ -30,15 +30,15 @@ const SearchBar = ({ searchJobs, favouritesLength }) => {
   };
 
   return (
-    <Navbar bg="dark" variant="dark">
+    <Navbar bg="dark" variant="dark" className="sticky-top">
       <Container className="justify-content-end">
         <Button
           variant="primary"
           onClick={() => history.push("/favourites")}
-          className="rounded-pill me-3"
+          className="rounded-pill me-3 py-1"
         >
           💖 <span className="me-2"> Favourites</span>
-          {favouritesLength > 0 && <Badge>{favouritesLength}</Badge>}
+          <Badge className="fs-6">{favouritesLength}</Badge>
         </Button>
         <Form onSubmit={handleSubmit} className="d-flex">
           <FormControl
