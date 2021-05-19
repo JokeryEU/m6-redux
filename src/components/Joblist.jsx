@@ -4,7 +4,7 @@ const Joblist = ({ jobs }) => {
     <>
       <h1>Jobs</h1>
       {jobs.map((job) => (
-        <Job key={job.id} {...job} />
+        <Job key={job.id} {...job} job={job} />
       ))}
     </>
   );

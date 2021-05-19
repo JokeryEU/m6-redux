@@ -1,6 +1,22 @@
 import { useState } from "react";
-import { Navbar, Container, Form, FormControl, Button } from "react-bootstrap";
-const SearchBar = ({ searchJobs }) => {
+import {
+  Navbar,
+  Container,
+  Form,
+  FormControl,
+  Button,
+  Badge,
+} from "react-bootstrap";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+const mapStateToProps = (state) => ({
+  favouritesLength: state.favourites.length,
+});
+
+const SearchBar = ({ searchJobs, favouritesLength }) => {
+  let history = useHistory();
+
   const [fields, setFields] = useState({ position: "", area: "" });
   const handleChange = (e) => {
     const field = e.target.name;
@@ -16,6 +32,14 @@ const SearchBar = ({ searchJobs }) => {
   return (
     <Navbar bg="dark" variant="dark">
       <Container className="justify-content-end">
+        <Button
+          variant="primary"
+          onClick={() => history.push("/favourites")}
+          className="rounded-pill me-3"
+        >
+          💖 <span className="me-2"> Favourites</span>
+          {favouritesLength > 0 && <Badge>{favouritesLength}</Badge>}
+        </Button>
         <Form onSubmit={handleSubmit} className="d-flex">
           <FormControl
             onChange={handleChange}
@@ -42,4 +66,4 @@ const SearchBar = ({ searchJobs }) => {
   );
 };
 
-export default SearchBar;
+export default connect(mapStateToProps)(SearchBar);
