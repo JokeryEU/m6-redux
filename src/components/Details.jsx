@@ -1,17 +1,18 @@
-import { useState, useEffect } from "react";
-import { Col, Container, Row, Spinner } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
+import { Col, Container, Row, Spinner, Button } from "react-bootstrap";
+import { useParams, useHistory } from "react-router-dom";
 
 const Details = () => {
   const [loading, setLoading] = useState(false);
   const [jobs, setJobs] = useState({});
   const { id } = useParams();
+  const history = useHistory();
 
-  const fetchJob = async () => {
+  const fetchJob = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch(
-        `https://api.allorigins.win/raw?url=https://jobs.github.com/positions.json/${id}.json`
+        `https://spotify-fetch.herokuapp.com/https://jobs.github.com/positions/${id}.json`
       );
       if (res.ok) {
         setLoading(false);
@@ -21,19 +22,26 @@ const Details = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchJob();
-  }, []);
+  }, [fetchJob]);
 
   return (
     <Container className="min-vh-100">
-      <Row className="mt-3 text-white">
-        <Col xs={12}>
+      <Row className="text-white">
+        <Col xs={12} className="mt-4">
+          <Button
+            variant="secondary"
+            onClick={() => history.push("/")}
+            className="rounded-circle my-4"
+          >
+            Home
+          </Button>
           {loading === true || jobs === "undefined" ? (
             <div className="d-flex justify-content-center">
-              <Spinner animation="grow" />
+              <Spinner animation="border" variant="info" />
             </div>
           ) : (
             <div

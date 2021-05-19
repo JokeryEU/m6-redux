@@ -30,7 +30,7 @@ const Jobs = ({
 
   return (
     <Col xs={12}>
-      <div className="d-flex border-bottom justify-content-between py-2">
+      <div className="d-flex border-bottom justify-content-between py-4 px-3 mb-3">
         <div>
           <Link style={{ color: "green" }} to={`/details/${id}`}>
             {title}
