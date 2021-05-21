@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import { removeFavourite } from "../actions";
 
 const mapStatetoProps = (state) => ({
-  favourites: state.favourites,
+  favoriteList: state.favourites.favoriteList,
 });
 
-const Favourites = ({ favourites, removeFavourite }) => {
+const Favourites = ({ favoriteList, removeFavourite }) => {
   const history = useHistory();
   const handleRemoveFavorite = (id) => {
     removeFavourite(id);
@@ -17,7 +17,7 @@ const Favourites = ({ favourites, removeFavourite }) => {
     <Container className="min-vh-100">
       <Row className="justify-content-center">
         <Col>
-          {favourites.length === 0 && (
+          {favoriteList.length === 0 && (
             <div className="text-center">
               <Button
                 variant="secondary"
@@ -31,8 +31,11 @@ const Favourites = ({ favourites, removeFavourite }) => {
               </h1>
             </div>
           )}
-          <ListGroup>
-            {favourites.map((fav) => (
+          <ListGroup className="mt-5">
+            <h1 className="text-center mb-5" style={{ color: "#d1cdc7" }}>
+              FAVOURITES
+            </h1>
+            {favoriteList.map((fav) => (
               <ListGroup.Item key={fav.id} className="d-flex lh-lg">
                 <span className="me-auto">
                   {fav.title} - {fav.company}

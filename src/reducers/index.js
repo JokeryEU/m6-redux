@@ -1,16 +1,16 @@
 import { initialState } from "../store";
 
-const mainReducer = (state = initialState, action) => {
+const favReducer = (state = initialState.favourites, action) => {
   switch (action.type) {
     case "ADD_FAVOURITE":
       return {
         ...state,
-        favourites: [...state.favourites, action.payload],
+        favoriteList: [...state.favoriteList, action.payload],
       };
     case "REMOVE_FAVOURITE":
       return {
         ...state,
-        favourites: state.favourites.filter((i) => i.id !== action.payload),
+        favoriteList: state.favoriteList.filter((i) => i.id !== action.payload),
       };
 
     default:
@@ -18,4 +18,4 @@ const mainReducer = (state = initialState, action) => {
   }
 };
 
-export default mainReducer;
+export default favReducer;

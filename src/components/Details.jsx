@@ -39,16 +39,25 @@ const Details = () => {
           >
             Home
           </Button>
+          <br />
           {loading === true || jobs === "undefined" ? (
             <div className="d-flex justify-content-center">
               <Spinner animation="border" variant="info" />
             </div>
           ) : (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: `${jobs.description}`,
-              }}
-            />
+            <>
+              <img
+                alt="job"
+                src={jobs.company_logo}
+                className="mb-3"
+                style={{ width: "200px", height: "200px" }}
+              />
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: `${jobs.description}`,
+                }}
+              />
+            </>
           )}
         </Col>
       </Row>

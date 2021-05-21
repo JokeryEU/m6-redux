@@ -9,12 +9,13 @@ import {
 } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { searchJob } from "../actions/jobs";
 
 const mapStateToProps = (state) => ({
-  favouritesLength: state.favourites.length,
+  favouritesLength: state.favourites.favoriteList.length,
 });
 
-const SearchBar = ({ searchJobs, favouritesLength }) => {
+const SearchBar = ({ searchJob, favouritesLength }) => {
   let history = useHistory();
 
   const [fields, setFields] = useState({ position: "", area: "" });
@@ -26,7 +27,7 @@ const SearchBar = ({ searchJobs, favouritesLength }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    searchJobs(fields.position, fields.area);
+    searchJob(fields.position, fields.area);
   };
 
   return (
@@ -45,17 +46,19 @@ const SearchBar = ({ searchJobs, favouritesLength }) => {
             onChange={handleChange}
             value={fields.position}
             type="text"
-            placeholder="Insert Position"
-            className="mr-2"
+            placeholder="Add Job Title"
+            className="mr-2 text-white"
             name="position"
+            style={{ backgroundColor: "#181a1b" }}
           />
           <FormControl
             onChange={handleChange}
             value={fields.area}
             type="text"
-            placeholder="Insert Location"
-            className="mx-2"
+            placeholder="Add City"
+            className="mx-2 text-white"
             name="area"
+            style={{ backgroundColor: "#181a1b" }}
           />
           <Button type="submit" variant="outline-info" className="ml-2">
             Search
@@ -66,4 +69,4 @@ const SearchBar = ({ searchJobs, favouritesLength }) => {
   );
 };
 
-export default connect(mapStateToProps)(SearchBar);
+export default connect(mapStateToProps, { searchJob })(SearchBar);

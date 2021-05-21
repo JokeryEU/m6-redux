@@ -1,64 +1,45 @@
-import { useEffect, useState } from "react";
-import { Container, Row, Spinner } from "react-bootstrap";
+import { useEffect } from "react";
+import { Container, Row, Spinner, Button } from "react-bootstrap";
 import Joblist from "./Joblist";
 import SearchBar from "./SearchBar";
+import { connect } from "react-redux";
+import { fetchJobs } from "../actions/jobs";
 
-const MainPage = (props) => {
-  const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const fetchJobs = async () => {
-    try {
-      setLoading(true);
+const mapStateToProps = (state) => state.jobs;
 
-      const res = await fetch(
-        `https://api.allorigins.win/raw?url=https://jobs.github.com/positions.json`
-      );
-      if (res.ok) {
-        setLoading(false);
-        const data = await res.json();
-        setJobs(data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const searchJobs = async (position, area) => {
-    try {
-      setLoading(true);
-      const res = await fetch(
-        `https://striveschool-api.herokuapp.com/api/jobs?description=${position}&location=${area}`
-      );
-      if (res.ok) {
-        setLoading(false);
-        const data = await res.json();
-        setJobs(data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+const MainPage = ({ jobList, loading, error, fetchJobs }) => {
   useEffect(() => {
     fetchJobs();
-  }, []);
+  }, [fetchJobs]);
 
   return (
     <>
-      <SearchBar searchJobs={searchJobs} />
-      <Container className="min-vh-100">
+      <SearchBar />
+      <Container className="min-vh-100" style={{ position: "relative" }}>
         {(loading && (
           <Row className="justify-content-center mt-3">
-            <Spinner animation="grow" />
+            <Spinner animation="border" variant="info" />
           </Row>
         )) || (
-          <Row className="mt-3">
-            <Joblist jobs={jobs} />
-          </Row>
+          <>
+            <Row className="mt-3">
+              <Joblist jobs={jobList} />
+            </Row>
+            <Button
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+              variant="info"
+              style={{ position: "absolute", bottom: "0", right: "-3vh" }}
+              className=" lh-base d-block"
+            >
+              TOP
+            </Button>
+          </>
         )}
       </Container>
     </>
   );
 };
 
-export default MainPage;
+export default connect(mapStateToProps, { fetchJobs })(MainPage);
